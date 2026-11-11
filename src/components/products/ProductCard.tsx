@@ -4,6 +4,7 @@ import type { Product } from "@spree/sdk";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { memo } from "react";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
 import { HiddenPricePrompt } from "@/components/products/HiddenPricePrompt";
 import { ProductImage } from "@/components/ui/product-image";
 import { useFormatMoney } from "@/hooks/useFormatMoney";
@@ -34,6 +35,7 @@ export const ProductCard = memo(function ProductCard({
 }: ProductCardProps) {
   const t = useTranslations("products");
   const imageUrl = product.thumbnail_url || null;
+  const affiliate = affiliateEnabled();
 
   const formatMoney = useFormatMoney();
   const price = product.price;
@@ -89,7 +91,9 @@ export const ProductCard = memo(function ProductCard({
         </h3>
 
         <div className="mt-2 flex items-center gap-2">
-          {displayPrice ? (
+          {affiliate ? (
+            <span className="text-sm font-medium text-gray-600">Se erbjudande</span>
+          ) : displayPrice ? (
             <span className="text-lg font-semibold text-gray-900">
               {displayPrice}
             </span>
@@ -105,7 +109,7 @@ export const ProductCard = memo(function ProductCard({
           )}
         </div>
 
-        {!product.purchasable && (
+        {!affiliate && !product.purchasable && (
           <span className="mt-2 text-sm text-gray-500">{t("outOfStock")}</span>
         )}
       </div>
