@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
 import { getCachedCategory } from "@/lib/data/cached";
 import { cachedGetCategory } from "@/lib/data/categories";
 import {
@@ -37,6 +38,7 @@ export async function generateCategoryMetadata({
     `Browse ${category.name} products.`;
 
   const storeUrl = getStoreUrl();
+  if (affiliateEnabled()) return { title, description, alternates: storeUrl ? {canonical: `${storeUrl}/${country}/${locale}/c/${category.permalink}`} : undefined };
   const localizedAlternates = storeUrl
     ? await buildLocalizedAlternates({
         storeUrl,
