@@ -1,4 +1,5 @@
 import type { Category, Collection, Product, Seller } from "@spree/sdk";
+import { affiliateEnabled, localProductList, localSellers } from "@/lib/affiliate/catalog";
 import { getCategories } from "@/lib/data/categories";
 import { getCollections } from "@/lib/data/collections";
 import { cachedListProducts } from "@/lib/data/products";
@@ -49,6 +50,7 @@ export async function quickSearch(
   if (search.length < QUICK_SEARCH_MIN_LENGTH)
     return EMPTY_QUICK_SEARCH_RESULTS;
 
+  if (affiliateEnabled()) return {products:localProductList({search,limit:PRODUCT_LIMIT}).data,categories:[],collections:[],sellers:localSellers().filter(s=>s.name.toLowerCase().includes(search.toLowerCase())).slice(0,SELLER_LIMIT)};
   const userToken = await getAccessToken();
 
   const [products, categories, collections, sellers] = await Promise.allSettled(
