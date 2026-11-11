@@ -192,7 +192,7 @@ export function ProductDetails({
                 {t("outOfStock")}
               </span>
             )}
-          </div>
+          </div>}
 
           {/* Variant Picker */}
           {!affiliate && hasVariants && optionTypes.length > 0 && (
