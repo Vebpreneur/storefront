@@ -17,6 +17,7 @@ import { useStore } from "@/contexts/StoreContext";
 import { useFormatMoney } from "@/hooks/useFormatMoney";
 import { trackAddToCart, trackViewItem } from "@/lib/analytics/gtm";
 import { strikethroughAmount } from "@/lib/utils/price";
+import { affiliateEnabled, affiliateUrl } from "@/lib/affiliate/catalog";
 
 interface ProductDetailsProps {
   product: Product;
@@ -31,6 +32,8 @@ export function ProductDetails({
   seller,
 }: ProductDetailsProps) {
   const { addItem } = useCart();
+  const affiliate = affiliateEnabled();
+  const externalOffer = affiliateUrl(product.slug);
   const { currency } = useStore();
   const t = useTranslations("products");
   const ts = useTranslations("sellers");
@@ -152,6 +155,8 @@ export function ProductDetails({
           )}
 
           {/* Price */}
+          {affiliate && <p className="mt-4 text-sm text-gray-600">Aktuella priser och abonnemang visas hos leverantören.</p>}
+          {!affiliate && (
           <div className="mt-4 flex items-center gap-4">
             {displayPrice ? (
               <span className="text-3xl font-bold text-gray-900">
@@ -172,8 +177,10 @@ export function ProductDetails({
             )}
           </div>
 
+          )}
+
           {/* Stock Status — stock with no price cannot be bought, so it reads as out of stock like the button; a guest who must sign in to see prices gets no button, so stock alone decides */}
-          <div className="mt-4">
+          {!affiliate && <div className="mt-4">
             {inStock && (isPurchasable || pricesHidden) ? (
               <span className="inline-flex items-center gap-1.5 text-green-600">
                 <CircleCheckBig className="w-5 h-5" />
@@ -188,7 +195,7 @@ export function ProductDetails({
           </div>
 
           {/* Variant Picker */}
-          {hasVariants && optionTypes.length > 0 && (
+          {!affiliate && hasVariants && optionTypes.length > 0 && (
             <div className="mt-8">
               <VariantPicker
                 variants={variants}
@@ -201,7 +208,9 @@ export function ProductDetails({
 
           {/* Quantity & Add to Cart */}
           <div className="mt-8">
-            {pricesHidden ? (
+            {affiliate && externalOffer ? (
+              <Button asChild size="lg"><a href={externalOffer} target="_blank" rel="sponsored noopener noreferrer">Se erbjudanden hos leverantören ↗</a></Button>
+            ) : pricesHidden ? (
               // Guest on a prices-hidden channel: no pricing, no ordering —
               // route them through the wholesale sign-in first.
               <Button asChild size="lg">
@@ -261,7 +270,7 @@ export function ProductDetails({
           <ProductCustomFields customFields={product.custom_fields} />
 
           {/* Product Details */}
-          <div className="mt-8 border-t pt-8">
+          {!affiliate && <div className="mt-8 border-t pt-8">
             <h2 className="text-lg font-medium text-gray-900 mb-4">
               {t("details")}
             </h2>
@@ -281,7 +290,7 @@ export function ProductDetails({
                 </div>
               )}
             </dl>
-          </div>
+          </div>}
         </div>
       </div>
     </div>
