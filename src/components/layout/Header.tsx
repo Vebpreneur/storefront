@@ -6,6 +6,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 import { CartButton } from "@/components/layout/CartButton";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
 import { SearchToggle } from "@/components/layout/SearchToggle";
 import { Button } from "@/components/ui/button";
 import { isMarketplaceEnabled, isWholesaleEnabled } from "@/lib/spree";
@@ -116,22 +117,22 @@ export async function Header({
               {t("wholesale")}
             </Link>
           )}
-          <LazyRegionPreferences variant="header" />
+          {!affiliateEnabled() && <LazyRegionPreferences variant="header" />}
         </div>
       }
       rightEnd={
         <>
           {/* Account - desktop only */}
-          <div className="hidden md:block">
+          {!affiliateEnabled() && <div className="hidden md:block">
             <Button variant="ghost" size="icon-lg" asChild>
               <Link href={`${basePath}/account`} aria-label={t("account")}>
                 <User className="size-5" />
               </Link>
             </Button>
-          </div>
+          </div>}
 
           {/* Cart */}
-          <CartButton />
+          {!affiliateEnabled() && <CartButton />}
         </>
       }
     />
