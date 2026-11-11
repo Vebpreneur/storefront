@@ -24,3 +24,6 @@ Based on visual patterns of https://github.com/spree/storefront. Copyright (c) 2
 
 ## Status
 First pilot implementation. CI/build and live deployment must be verified independently before production readiness is claimed.
+
+### Vercel monorepo settings
+Framework: Next.js. Root directory: `affiliate-engine`. Install command: `npm install --no-audit --no-fund`. Build command: `npm run build`. The parent pnpm lockfile belongs to upstream Spree and must not be used to install this isolated app.
