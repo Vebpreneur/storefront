@@ -2,6 +2,7 @@
 
 import type { CategoryListParams, ProductListParams } from "@spree/sdk";
 import { cacheLife, cacheTag } from "next/cache";
+import { affiliateEnabled, localProductList } from "@/lib/affiliate/catalog";
 import { getAccessToken, getClient, getLocaleOptions } from "@/lib/spree";
 
 async function cachedListCategories(
@@ -18,6 +19,7 @@ export async function getCategories(
   params?: CategoryListParams,
   options?: { locale?: string; country?: string },
 ) {
+  if (affiliateEnabled()) return { data: [] } as Awaited<ReturnType<typeof cachedListCategories>>;
   const localeOptions = options ?? (await getLocaleOptions());
   return cachedListCategories(params, localeOptions);
 }
@@ -65,6 +67,7 @@ export async function getCategoryProducts(
   categoryId: string,
   params?: ProductListParams,
 ) {
+  if (affiliateEnabled()) return localProductList(params);
   const options = await getLocaleOptions();
   const userToken = await getAccessToken();
   return cachedListCategoryProducts(categoryId, params, options, userToken);
