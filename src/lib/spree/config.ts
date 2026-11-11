@@ -76,7 +76,7 @@ export function isMarketplaceEnabled(): boolean {
 
 /** Whether the wholesale portal addon is enabled for this storefront. */
 export function isWholesaleEnabled(): boolean {
-  return getWholesaleChannelCode() !== null;
+  return !affiliateEnabled() && getWholesaleChannelCode() !== null;
 }
 
 /**
