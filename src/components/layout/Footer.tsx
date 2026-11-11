@@ -1,4 +1,5 @@
 import type { Category } from "@spree/sdk";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
@@ -61,7 +62,7 @@ export async function Footer({ basePath, locale, categoryLinks }: FooterProps) {
               {t("description") || storeDescription}
             </p>
             {/* Demo-only: Remove for production. */}
-            <div className="mt-4 flex flex-col gap-2">
+            {!affiliateEnabled() && <div className="mt-4 flex flex-col gap-2">
               <Link
                 href={githubUrl}
                 target="_blank"
@@ -86,7 +87,7 @@ export async function Footer({ basePath, locale, categoryLinks }: FooterProps) {
               >
                 {t("learnMore")}
               </Link>
-            </div>
+            </div>}
           </div>
 
           {/* Links */}
@@ -126,7 +127,7 @@ export async function Footer({ basePath, locale, categoryLinks }: FooterProps) {
           </div>
 
           {/* Account */}
-          <div>
+          {!affiliateEnabled() && <div>
             <h3 className="text-sm font-medium text-neutral-300">
               {t("account")}
             </h3>
@@ -167,6 +168,8 @@ export async function Footer({ basePath, locale, categoryLinks }: FooterProps) {
               )}
             </ul>
           </div>
+
+          }
 
           {/* Policies */}
           <div>
