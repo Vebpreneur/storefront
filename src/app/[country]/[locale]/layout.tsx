@@ -1,4 +1,5 @@
 import type { Market } from "@spree/sdk";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
@@ -116,6 +117,9 @@ export async function CountryLocaleLayoutContent({
   ) => {
     const messages = await loadMessages(requestedLocale);
 
+    if (affiliateEnabled()) {
+      return <DocumentShell locale={requestedLocale}><NextIntlClientProvider messages={messages} locale={requestedLocale}>{children}</NextIntlClientProvider></DocumentShell>;
+    }
     return (
       <DocumentShell locale={requestedLocale}>
         <CountryLocaleProviders
