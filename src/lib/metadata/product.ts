@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
 import { getCachedProduct, PRODUCT_METADATA_EXPAND } from "@/lib/data/cached";
 import { cachedGetProduct } from "@/lib/data/products";
 import {
@@ -35,6 +36,7 @@ export async function generateProductMetadata({
       : `Shop ${product.name}`;
 
   const storeUrl = getStoreUrl();
+  if (affiliateEnabled()) return { title, description, alternates: storeUrl ? {canonical: `${storeUrl}/${country}/${locale}/products/${product.slug}`} : undefined, openGraph: {title, description, images: product.thumbnail_url ? [{url: product.thumbnail_url, alt: product.name}] : []} };
   const localizedAlternates = storeUrl
     ? await buildLocalizedAlternates({
         storeUrl,
