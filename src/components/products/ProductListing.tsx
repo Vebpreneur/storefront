@@ -5,6 +5,7 @@ import type {
   ProductListParams,
 } from "@spree/sdk";
 import { Search } from "lucide-react";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
 import { getTranslations } from "next-intl/server";
 import { type ReactElement, Suspense } from "react";
 import { InfiniteProductList } from "@/components/products/InfiniteProductList";
