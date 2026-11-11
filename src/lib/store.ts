@@ -37,7 +37,7 @@ export function getStoreUrl(): string | undefined {
  * Get the store name from environment variables.
  */
 export function getStoreName(): string {
-  return process.env.NEXT_PUBLIC_STORE_NAME || "Spree Store";
+  return process.env.NEXT_PUBLIC_STORE_NAME || (process.env.NEXT_PUBLIC_AFFILIATE_MODE !== "false" ? "eSIM" : "Spree Store");
 }
 
 /**
@@ -54,14 +54,14 @@ export function getStoreDescription(): string {
  * Get the default country ISO code (lowercase).
  */
 export function getDefaultCountry(): string {
-  return (process.env.NEXT_PUBLIC_DEFAULT_COUNTRY || "us").toLowerCase();
+  return (process.env.NEXT_PUBLIC_DEFAULT_COUNTRY || (process.env.NEXT_PUBLIC_AFFILIATE_MODE !== "false" ? "se" : "us")).toLowerCase();
 }
 
 /**
  * Get the default locale code.
  */
 export function getDefaultLocale(): string {
-  return process.env.NEXT_PUBLIC_DEFAULT_LOCALE || "en";
+  return process.env.NEXT_PUBLIC_DEFAULT_LOCALE || (process.env.NEXT_PUBLIC_AFFILIATE_MODE !== "false" ? "sv" : "en");
 }
 
 /**
