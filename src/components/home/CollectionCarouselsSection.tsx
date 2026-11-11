@@ -10,6 +10,7 @@ import {
   getCollections,
 } from "@/lib/data/collections";
 import { getAccessToken } from "@/lib/spree";
+import { affiliateEnabled, localProductList } from "@/lib/affiliate/catalog";
 
 /** Collections promoted on the home page, in the merchant's order. */
 const HOME_COLLECTION_LIMIT = 3;
@@ -111,14 +112,14 @@ async function loadShelves(
         },
         options,
       ),
-      getAccessToken(),
+      affiliateEnabled() ? Promise.resolve(undefined) : getAccessToken(),
     ]);
     const shelves = await Promise.all(
       collections
         .filter((collection) => collection.products_count > 0)
         .slice(0, HOME_COLLECTION_LIMIT + HOME_COLLECTION_SPARES)
         .map(async (collection) => {
-          const { data: products } = await cachedListCollectionProducts(
+          const { data: products } = affiliateEnabled() ? localProductList({ limit: PRODUCTS_PER_CAROUSEL }) : await cachedListCollectionProducts(
             collection.id,
             { limit: PRODUCTS_PER_CAROUSEL, fields: PRODUCT_CARD_FIELDS },
             options,
