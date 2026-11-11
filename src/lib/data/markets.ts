@@ -2,6 +2,7 @@
 
 import type { Market } from "@spree/sdk";
 import { cacheLife, cacheTag } from "next/cache";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
 import { DEFAULT_LOCALE, resolveSupportedLocale } from "@/i18n/locales";
 import { getClient, getLocaleOptions } from "@/lib/spree";
 import { getDefaultCountry, getDefaultLocale } from "@/lib/store";
@@ -43,6 +44,7 @@ async function cachedListMarketCountries(
  * static shell instead of blocking every page that needs it.
  */
 export async function getStorefrontMarkets(): Promise<{ data: Market[] }> {
+  if (affiliateEnabled()) return { data: [] };
   return cachedListMarkets({
     country: getDefaultCountry(),
     locale: resolveSupportedLocale(getDefaultLocale()) ?? DEFAULT_LOCALE,
@@ -67,6 +69,7 @@ export async function getMarketCountries(marketId: string) {
 export async function resolveCurrency(
   country: string,
 ): Promise<string | undefined> {
+  if (affiliateEnabled()) return "SEK";
   const { data: markets } = await getStorefrontMarkets();
   const iso = country.toLowerCase();
   for (const market of markets) {
