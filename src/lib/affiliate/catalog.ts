@@ -1,4 +1,4 @@
-import type { Product, Seller, PaginatedResponse, ProductListParams, ProductFiltersResponse } from "@spree/sdk";
+import type { Product, Seller, PaginatedResponse, ProductListParams, ProductFiltersResponse, Category } from "@spree/sdk";
 /** Data adapter for the EXISTING Spree frontend. No custom UI components. */
 export const affiliateEnabled = () => process.env.NEXT_PUBLIC_AFFILIATE_MODE !== "false";
 const photo=(id:string)=>`https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=85`;
@@ -21,6 +21,17 @@ export const destinations=[
  ["asien","Asien","photo-1513415277900-a62401e19be4"],
  ["globalt","Globalt","photo-1451187580459-43490279c0fa"]
 ] as const;
+/** Original Spree category navigation, fed from the same static catalog. */
+export function localCategories():Category[]{
+ return [
+  {id:"countries",name:"Länder",permalink:"lander",depth:0,children:[]},
+  {id:"regions",name:"Regioner",permalink:"regioner",depth:0,children:[]},
+  {id:"global",name:"Globalt",permalink:"globalt",depth:0,children:[]}
+ ] as Category[];
+}
+export function localCategory(value:string):Category|null{
+ return localCategories().find(c=>c.id===value||c.permalink===value)??null;
+}
 export function affiliateUrl(slug:string):string|undefined{
  const id=slug.startsWith("airalo-")?"airalo":slug;
  return suppliers.find(s=>s[0]===id)?.[3];
@@ -50,6 +61,10 @@ export function localProductList(params:ProductListParams={}):PaginatedResponse<
  const p=params as Record<string,unknown>;
  let list=localProducts();
  if(p.seller_id_eq && p.seller_id_eq!=="airalo")list=[];
+ const category=String(p.in_category??"");
+ if(category==="countries")list=list.filter(d=>["airalo-turkiet","airalo-usa","airalo-thailand"].includes(d.slug));
+ if(category==="regions")list=list.filter(d=>["airalo-europa","airalo-asien"].includes(d.slug));
+ if(category==="global")list=list.filter(d=>d.slug==="airalo-globalt");
  const filter=p.q as Record<string,unknown>|undefined;
  const q=String(filter?.name_cont??p.name_cont??p.search??"").trim().toLocaleLowerCase("sv");
  if(q)list=list.filter(d=>d.name.toLocaleLowerCase("sv").includes(q));
