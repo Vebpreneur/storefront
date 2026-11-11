@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
 import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 import { getStoreName } from "@/lib/store";
@@ -34,8 +35,7 @@ export async function HeroSection({ basePath, locale }: HeroSectionProps) {
             <Button size="lg" asChild>
               <Link href={`${basePath}/products`}>{t("shopNow")}</Link>
             </Button>
-            {/* Demo-only: Remove for production. */}
-            <Button variant="outline" size="lg" asChild>
+            {!affiliateEnabled() && <><Button variant="outline" size="lg" asChild>
               <Link href={githubUrl} target="_blank" rel="noopener noreferrer">
                 {t("forkOnGithub")}
               </Link>
@@ -48,7 +48,7 @@ export async function HeroSection({ basePath, locale }: HeroSectionProps) {
               >
                 {t("quickstartGuide")} &rarr;
               </Link>
-            </Button>
+            </Button></>}
           </div>
         </div>
       </div>
