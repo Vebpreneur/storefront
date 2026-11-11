@@ -10,6 +10,7 @@ import {
   SpreeError,
 } from "@spree/sdk";
 import { cacheLife, cacheTag } from "next/cache";
+import { affiliateEnabled, localProductList } from "@/lib/affiliate/catalog";
 import { getProductFilters } from "@/lib/data/products";
 import { getAccessToken, getClient, getLocaleOptions } from "@/lib/spree";
 
@@ -44,6 +45,7 @@ export async function getCollections(
   params: CollectionListParams = {},
   options?: LocaleOptions,
 ): Promise<PaginatedResponse<Collection>> {
+  if (affiliateEnabled()) return { data: [{ id: "destinations", name: "Destinationer", permalink: "destinationer", products_count: 6 }], meta: { count: 1, pages: 1 } } as unknown as PaginatedResponse<Collection>;
   return cachedListCollections(params, options ?? (await getLocaleOptions()));
 }
 
@@ -81,6 +83,7 @@ export async function getCollection(
   idOrPermalink: string,
   options?: LocaleOptions,
 ): Promise<Collection | null> {
+  if (affiliateEnabled()) return idOrPermalink === "destinationer" || idOrPermalink === "destinations" ? { id: "destinations", name: "Destinationer", permalink: "destinationer", products_count: 6 } as Collection : null;
   return cachedGetCollection(
     idOrPermalink,
     options ?? (await getLocaleOptions()),
@@ -113,6 +116,7 @@ export async function getCollectionProducts(
   collectionId: string,
   params?: ProductListParams,
 ): Promise<PaginatedResponse<Product>> {
+  if (affiliateEnabled()) return localProductList(params);
   const options = await getLocaleOptions();
   const userToken = await getAccessToken();
   return cachedListCollectionProducts(collectionId, params, options, userToken);
