@@ -1,6 +1,6 @@
 import type { Product, Seller, PaginatedResponse, ProductListParams, ProductFiltersResponse } from "@spree/sdk";
 /** Data adapter for the EXISTING Spree frontend. No custom UI components. */
-export const affiliateEnabled = () => process.env.AFFILIATE_MODE === "true";
+export const affiliateEnabled = () => process.env.NEXT_PUBLIC_AFFILIATE_MODE !== "false";
 const photo=(id:string)=>`https://images.unsplash.com/${id}?auto=format&fit=crop&w=1200&q=85`;
 export const suppliers=[
  ["airalo","Airalo","airalo.com","https://airalo.tpx.lu/JaG8IjYH","photo-1488085061387-422e29b40080"],
