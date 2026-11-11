@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
 import { SUPPORTED_LOCALES } from "@/i18n/locales";
 import { REQUEST_PATHNAME_HEADER } from "@/i18n/routing";
 import { createSpreeMiddleware } from "@/lib/spree/middleware";
@@ -69,6 +70,9 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
   }
 
   const [, country, locale, path] = match;
+  if (affiliateEnabled() && ["/cart", "/account", "/checkout", "/confirm-payment", "/order-placed", "/wholesale"].some(prefix => path === prefix || path.startsWith(prefix + "/"))) {
+    return rewriteToNotFound(request);
+  }
   if (await isMissingStorefrontResource(path, { country, locale })) {
     const notFound = rewriteToNotFound(request);
     // Keep the country and language cookies the middleware set for this URL,
