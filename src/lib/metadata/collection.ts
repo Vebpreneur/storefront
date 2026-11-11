@@ -1,4 +1,6 @@
 import type { Collection } from "@spree/sdk";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
+import { getCollection } from "@/lib/data/collections";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { cachedGetCollection } from "@/lib/data/collections";
@@ -23,7 +25,7 @@ export async function generateCollectionMetadata({
     locale: locale as Locale,
     namespace: "collections",
   });
-  const collection = await cachedGetCollection(permalink, { country, locale });
+  const collection = affiliateEnabled() ? await getCollection(permalink, { country, locale }) : await cachedGetCollection(permalink, { country, locale });
   if (!collection) return { title: t("collectionNotFound") };
 
   const title = collection.meta_title || collection.name;
@@ -36,6 +38,7 @@ export async function generateCollectionMetadata({
   // Permalinks are translatable, so each locale's alternate is resolved from
   // that locale's own record, and only genuinely translated ones are listed.
   const storeUrl = getStoreUrl();
+  if (affiliateEnabled()) return { title, description, alternates: storeUrl ? {canonical: `${storeUrl}/${country}/${locale}/collections/${collection.permalink}`} : undefined };
   const localizedAlternates = storeUrl
     ? await buildLocalizedAlternates({
         storeUrl,
