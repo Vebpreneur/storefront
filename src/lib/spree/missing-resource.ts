@@ -1,5 +1,6 @@
 import { type Client, createClient, SpreeError } from "@spree/sdk";
 import { getConfig, isMarketplaceEnabled } from "./config";
+import { affiliateEnabled, localProduct, localSeller } from "@/lib/affiliate/catalog";
 
 /**
  * Upper bound on the existence check. A slow Store API must not hold up the
@@ -108,6 +109,13 @@ export async function isMissingStorefrontResource(
   path: string,
   options: LookupOptions,
 ): Promise<boolean> {
+  if (affiliateEnabled()) {
+    const product = path.match(/^\\/products\\/([^/]+)$/);
+    const seller = path.match(/^\\/sellers\\/([^/]+)$/);
+    if (product) return !localProduct(decodeURIComponent(product[1]));
+    if (seller) return !localSeller(decodeURIComponent(seller[1]));
+    return false;
+  }
   // Seller pages exist only on marketplace builds; elsewhere every /sellers
   // URL is missing without asking the Store API.
   if (!isMarketplaceEnabled() && /^\/sellers(\/|$)/.test(path)) return true;
