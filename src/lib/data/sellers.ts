@@ -10,6 +10,7 @@ import {
   SpreeError,
 } from "@spree/sdk";
 import { cacheLife, cacheTag } from "next/cache";
+import { affiliateEnabled, localSeller, localSellerList, localProductList } from "@/lib/affiliate/catalog";
 import { getAccessToken, getClient, getLocaleOptions } from "@/lib/spree";
 
 type LocaleOptions = { locale?: string; country?: string };
@@ -39,6 +40,7 @@ export async function cachedListSellers(
   "use cache: remote";
   cacheLife("tenMinutes");
   cacheTag("sellers");
+  if (affiliateEnabled()) return localSellerList(params);
   const { search, ...rest } = params;
   const filters: SellerFilters = search ? { search } : {};
   return getClient().sellers.list(
@@ -68,6 +70,7 @@ export async function cachedGetSeller(
   "use cache: remote";
   cacheLife("tenMinutes");
   cacheTag("sellers", `seller:${slugOrId}`);
+  if (affiliateEnabled()) return localSeller(slugOrId);
   try {
     return await getClient().sellers.get(slugOrId, { expand }, options);
   } catch (error) {
@@ -118,6 +121,7 @@ export async function getSellerProducts(
   sellerId: string,
   params?: ProductListParams,
 ): Promise<PaginatedResponse<Product>> {
+  if (affiliateEnabled()) return localProductList({ ...params, seller_id_eq: sellerId } as ProductListParams);
   const options = await getLocaleOptions();
   const userToken = await getAccessToken();
   return cachedListSellerProducts(sellerId, params, options, userToken);
