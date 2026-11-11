@@ -110,10 +110,10 @@ export async function isMissingStorefrontResource(
   options: LookupOptions,
 ): Promise<boolean> {
   if (affiliateEnabled()) {
-    const product = path.match(/^\\/products\\/([^/]+)$/);
-    const seller = path.match(/^\\/sellers\\/([^/]+)$/);
-    if (product) return !localProduct(decodeURIComponent(product[1]));
-    if (seller) return !localSeller(decodeURIComponent(seller[1]));
+    const product = path.startsWith("/products/") ? path.split("/")[2] : undefined;
+    const seller = path.startsWith("/sellers/") ? path.split("/")[2] : undefined;
+    if (product) return !localProduct(decodeURIComponent(product));
+    if (seller) return !localSeller(decodeURIComponent(seller));
     return false;
   }
   // Seller pages exist only on marketplace builds; elsewhere every /sellers
