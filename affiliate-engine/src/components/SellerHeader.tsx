@@ -1,4 +1,0 @@
-import Link from "next/link";
-import type {Supplier} from "../data/suppliers";
-export function SellerHeader({seller}:{seller:Supplier}){
-return <><div className="seller-hero" style={{backgroundImage:`linear-gradient(90deg,rgba(0,0,0,.42),rgba(0,0,0,.05)),url("${seller.cover}")`}}/><div className="container seller-profile"><div className="crumb"><Link href="/sellers">Alla leverantörer</Link> <span> / {seller.name}</span></div><div className="profile-main"><div className="profile-logo" style={{background:seller.color}}><img src={`https://www.google.com/s2/favicons?domain=${seller.domain}&sz=128`} alt="" /></div><div><div className="eyebrow">LEVERANTÖR</div><h1>{seller.name}</h1><p>{seller.about}</p></div><a className="button button-dark profile-cta" href={seller.affiliateUrl} target="_blank" rel="sponsored noopener noreferrer">Besök {seller.name} ↗</a></div></div></>}
