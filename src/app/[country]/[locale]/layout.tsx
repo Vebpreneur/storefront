@@ -118,7 +118,7 @@ export async function CountryLocaleLayoutContent({
     const messages = await loadMessages(requestedLocale);
 
     if (affiliateEnabled()) {
-      return <DocumentShell locale={requestedLocale}><NextIntlClientProvider messages={messages} locale={requestedLocale}>{children}</NextIntlClientProvider></DocumentShell>;
+      return <DocumentShell locale={requestedLocale}><NextIntlClientProvider messages={messages} locale={requestedLocale}><StoreProvider initialCountry={country} initialLocale={requestedLocale} initialMarkets={[]} >{children}</StoreProvider></NextIntlClientProvider></DocumentShell>;
     }
     return (
       <DocumentShell locale={requestedLocale}>
