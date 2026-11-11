@@ -27,7 +27,7 @@ export function localCategories():Category[]{
   {id:"countries",name:"Länder",permalink:"lander",depth:0,children:[]},
   {id:"regions",name:"Regioner",permalink:"regioner",depth:0,children:[]},
   {id:"global",name:"Globalt",permalink:"globalt",depth:0,children:[]}
- ] as Category[];
+ ] as unknown as Category[];
 }
 export function localCategory(value:string):Category|null{
  return localCategories().find(c=>c.id===value||c.permalink===value)??null;
@@ -51,7 +51,7 @@ export function localProducts(): Product[]{return destinations.map(([slug,name,i
  seller:localSellers()[0],categories:[],
  media:[{id:`image-${i}`,url:photo(image),original_url:photo(image),large_url:photo(image),thumbnail_url:photo(image),variant_ids:[]}],
  variants:[],option_types:[],custom_fields:[]
- }) as Product);}
+ }) as unknown as Product);}
 export function localProduct(slug:string){return localProducts().find(p=>p.slug===slug||p.id===slug)??null;}
 function paginate<T>(data:T[],page=1,limit=24):PaginatedResponse<T>{return {data:data.slice((page-1)*limit,page*limit),meta:{count:data.length,pages:Math.max(1,Math.ceil(data.length/limit)),page,limit}} as unknown as PaginatedResponse<T>;}
 export function localSellerList(params:{page?:number;limit?:number;search?:string}={}):PaginatedResponse<Seller>{
