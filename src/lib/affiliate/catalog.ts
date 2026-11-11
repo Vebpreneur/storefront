@@ -61,6 +61,8 @@ export function localProductList(params:ProductListParams={}):PaginatedResponse<
  const p=params as Record<string,unknown>;
  let list=localProducts();
  if(p.seller_id_eq && p.seller_id_eq!=="airalo")list=[];
+ const selected = Array.isArray(p.with_option_value_ids) ? p.with_option_value_ids.map(String) : [];
+ if(selected.length){list=list.filter(d=>selected.some(v=>v==="countries"&&["airalo-turkiet","airalo-usa","airalo-thailand"].includes(d.slug)||v==="regions"&&["airalo-europa","airalo-asien"].includes(d.slug)||v==="global"&&d.slug==="airalo-globalt"));}
  const category=String(p.in_category??"");
  if(category==="countries")list=list.filter(d=>["airalo-turkiet","airalo-usa","airalo-thailand"].includes(d.slug));
  if(category==="regions")list=list.filter(d=>["airalo-europa","airalo-asien"].includes(d.slug));
@@ -72,4 +74,4 @@ export function localProductList(params:ProductListParams={}):PaginatedResponse<
  if(sort.includes("name"))list=[...list].sort((a,b)=>a.name.localeCompare(b.name,"sv")*(sort.startsWith("-")?-1:1));
  return paginate(list,Number(p.page)||1,Number(p.limit)||12);
 }
-export function localProductFilters():ProductFiltersResponse{return {filters:[],sort_options:[{id:"name",label:"Namn A–Ö",value:"name"},{id:"-name",label:"Namn Ö–A",value:"-name"}],default_sort:"name"} as unknown as ProductFiltersResponse;}
+export function localProductFilters():ProductFiltersResponse{return {filters:[{type:"option",id:"destination-type",label:"Typ av destination",kind:"dropdown",options:[{id:"countries",label:"Länder",count:3},{id:"regions",label:"Regioner",count:2},{id:"global",label:"Globalt",count:1}]}],sort_options:[{id:"name",label:"Namn A–Ö",value:"name"},{id:"-name",label:"Namn Ö–A",value:"-name"}],default_sort:"name"} as unknown as ProductFiltersResponse;}
