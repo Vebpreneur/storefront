@@ -2,6 +2,7 @@
 
 import type { ProductListParams } from "@spree/sdk";
 import { cacheLife, cacheTag } from "next/cache";
+import { affiliateEnabled, localProduct, localProductList, localProductFilters } from "@/lib/affiliate/catalog";
 import {
   cacheTagSuffix,
   DEFAULT_SURFACE,
@@ -46,6 +47,7 @@ export async function getProducts(
   params?: ProductListParams,
   surface: Surface = DEFAULT_SURFACE,
 ) {
+  if (affiliateEnabled() && surface === DEFAULT_SURFACE) return localProductList(params);
   const options = await getLocaleOptions();
   const userToken = await getAccessToken();
   return cachedListProducts(params, options, surface, userToken);
@@ -91,6 +93,11 @@ export async function getProduct(
   params?: { expand?: string[] },
   surface: Surface = DEFAULT_SURFACE,
 ) {
+  if (affiliateEnabled() && surface === DEFAULT_SURFACE) {
+    const product = localProduct(slugOrId);
+    if (!product) throw new Error("Affiliate product not found: " + slugOrId);
+    return product;
+  }
   const options = await getLocaleOptions();
   const userToken = await getAccessToken();
   return cachedGetProduct(
@@ -123,6 +130,7 @@ export async function getProductFilters(
   params?: Record<string, unknown>,
   surface: Surface = DEFAULT_SURFACE,
 ) {
+  if (affiliateEnabled() && surface === DEFAULT_SURFACE) return localProductFilters();
   const options = await getLocaleOptions();
   const userToken = await getAccessToken();
   return cachedGetProductFilters(params, options, surface, userToken);
