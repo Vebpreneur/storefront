@@ -11,7 +11,7 @@ import { MediaGallery } from "@/components/products/MediaGallery";
 import { ProductCustomFields } from "@/components/products/ProductCustomFields";
 import { VariantPicker } from "@/components/products/VariantPicker";
 import { Button } from "@/components/ui/button";
-import { useCart } from "@/contexts/CartContext";
+import { useOptionalCart } from "@/contexts/CartContext";
 import { useHiddenPricing } from "@/contexts/HiddenPricingContext";
 import { useStore } from "@/contexts/StoreContext";
 import { useFormatMoney } from "@/hooks/useFormatMoney";
@@ -31,7 +31,7 @@ export function ProductDetails({
   basePath,
   seller,
 }: ProductDetailsProps) {
-  const { addItem } = useCart();
+  const cart = useOptionalCart();
   const affiliate = affiliateEnabled();
   const externalOffer = affiliateUrl(product.slug);
   const { currency } = useStore();
@@ -118,7 +118,8 @@ export function ProductDetails({
     }
 
     setLoading(true);
-    await addItem(variantId, quantity);
+    if (!cart) return;
+    await cart.addItem(variantId, quantity);
     setLoading(false);
     trackAddToCart(product, selectedVariant, quantity, currency);
   };
