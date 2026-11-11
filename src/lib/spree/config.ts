@@ -1,5 +1,6 @@
 import { type Client, createClient } from "@spree/sdk";
 import type { Surface } from "./surface";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
 import type { SpreeNextConfig } from "./types";
 
 let _client: Client | null = null;
@@ -70,7 +71,7 @@ export function getWholesaleChannelCode(): string | null {
  * stores keep it unset and those routes 404.
  */
 export function isMarketplaceEnabled(): boolean {
-  return process.env.SPREE_MARKETPLACE_ENABLED?.trim().toLowerCase() === "true";
+  return affiliateEnabled() || process.env.SPREE_MARKETPLACE_ENABLED?.trim().toLowerCase() === "true";
 }
 
 /** Whether the wholesale portal addon is enabled for this storefront. */
