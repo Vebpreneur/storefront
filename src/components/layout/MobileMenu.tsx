@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { RegionPreferences } from "@/components/layout/RegionPreferences";
+import { affiliateEnabled } from "@/lib/affiliate/catalog";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -296,20 +297,20 @@ export function MobileMenu({
                     {t("wholesale")}
                   </Link>
                 )}
-                <SheetClose asChild>
+                {!affiliateEnabled() && <SheetClose asChild>
                   <Link
                     href={`${basePath}/account`}
                     className={`${linkClass} block`}
                   >
                     {t("myAccount")}
                   </Link>
-                </SheetClose>
+                </SheetClose>}
               </div>
             </nav>
 
             {/* Footer: centered Region and language control (mobile only) */}
             <SheetFooter className="lg:hidden items-center border-t border-gray-200 pt-4 gap-2">
-              <RegionPreferences variant="menu" />
+              {!affiliateEnabled() && <RegionPreferences variant="menu" />}
             </SheetFooter>
           </div>
 
