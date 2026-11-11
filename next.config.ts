@@ -78,6 +78,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       // Derived from SPREE_IMAGES_URL (if set) or SPREE_API_URL.
       ...spreeImagePatterns(),
+      { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "www.google.com", pathname: "/s2/favicons" },
       // Hosted demo / tunnel backends whose image host differs from SPREE_API_URL.
     ],
   },
