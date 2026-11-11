@@ -83,7 +83,7 @@ export async function getCollection(
   idOrPermalink: string,
   options?: LocaleOptions,
 ): Promise<Collection | null> {
-  if (affiliateEnabled()) return idOrPermalink === "destinationer" || idOrPermalink === "destinations" ? { id: "destinations", name: "Destinationer", permalink: "destinationer", products_count: 6 } as Collection : null;
+  if (affiliateEnabled()) return idOrPermalink === "destinationer" || idOrPermalink === "destinations" ? { id: "destinations", name: "Destinationer", permalink: "destinationer", products_count: 6, description: "Utforska destinationer för eSIM.", description_html: "" } as Collection : null;
   return cachedGetCollection(
     idOrPermalink,
     options ?? (await getLocaleOptions()),
