@@ -1,7 +1,7 @@
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Geist } from "next/font/google";
+import { DM_Sans, Manrope } from "next/font/google";
 import { Suspense } from "react";
 import { localeDirection } from "@/i18n/locales";
 
@@ -16,11 +16,8 @@ const spreeApiOrigin = (() => {
   }
 })();
 
-const geist = Geist({
-  variable: "--font-geist",
-  subsets: ["latin"],
-  display: "swap",
-});
+const dmSans = DM_Sans({variable: "--font-body", subsets: ["latin"], display: "swap"});
+const manrope = Manrope({variable: "--font-display", subsets: ["latin"], display: "swap"});
 
 interface DocumentShellProps {
   children: React.ReactNode;
@@ -42,7 +39,7 @@ export function DocumentShell({ children, locale }: DocumentShellProps) {
       </head>
       {gtmId && <GoogleTagManager gtmId={gtmId} />}
       <body
-        className={`${geist.variable} antialiased min-h-screen flex flex-col`}
+        className={`${dmSans.variable} ${manrope.variable} antialiased min-h-screen flex flex-col`}
       >
         <Suspense fallback={null}>{children}</Suspense>
         <Analytics />
