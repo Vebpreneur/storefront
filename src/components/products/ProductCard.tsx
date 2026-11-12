@@ -2,7 +2,7 @@
 
 import type { Product } from "@spree/sdk";
 import Link from "next/link";
-import { ArrowUpRight, Globe2, MapPin } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { memo } from "react";
 import { affiliateEnabled } from "@/lib/affiliate/catalog";
@@ -58,35 +58,21 @@ export const ProductCard = memo(function ProductCard({
 
 
   if (affiliate && product.slug.startsWith("airalo-")) {
-    const destination = product.name.replace(/^Airalo\s*[–-]\s*/, "");
-    const isGlobal = product.slug.endsWith("globalt");
-    const regional = ["europa", "asien"].some((slug) => product.slug.endsWith(slug));
-    const category = isGlobal ? "Global eSIM" : regional ? "Regional eSIM" : "Lokalt eSIM";
+    const destination = product.name.replace(/^Airalo\\s*[–-]\\s*/, "");
+    const category = product.slug.endsWith("globalt") ? "Globalt eSIM" : ["europa","asien"].some(v=>product.slug.endsWith(v)) ? "Regionalt eSIM" : "Lokalt eSIM";
     return (
       <article className="affiliate-product-card group">
         <div className="affiliate-product-image">
-          <ProductImage src={imageUrl} alt={destination} fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-[1.07]"
-            fetchPriority={fetchPriority} />
-          <span className="affiliate-product-badge"><Globe2 className="size-3.5" /> {category}</span>
-          <span className="affiliate-product-index">{String((index ?? 0) + 1).padStart(2, "0")} / 06</span>
+          <ProductImage src={imageUrl} alt={destination} fill fetchPriority={fetchPriority} sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.035]" />
+          <span className="affiliate-product-badge">{category}</span>
         </div>
         <div className="affiliate-product-copy">
-          <span className="affiliate-product-kicker">AIRALO · RESEUPPKOPPLING</span>
+          <span className="affiliate-product-kicker">AIRALO</span>
           <h3 className="affiliate-product-title">
-            <Link href={`${basePath}/products/${product.slug}${categoryId ? `?category_id=${categoryId}` : ""}`}
-              onClick={handleClick} className="after:absolute after:inset-0">
-              {destination}
-            </Link>
+            <Link href={`${basePath}/products/${product.slug}${categoryId ? `?category_id=${categoryId}` : ""}`} onClick={handleClick} className="after:absolute after:inset-0">{destination}</Link>
           </h3>
-          <p className="affiliate-product-description">
-            Upptäck eSIM-alternativ för {destination.toLowerCase()}. Välj ditt paket direkt hos Airalo.
-          </p>
-          <div className="affiliate-product-footer">
-            <span><MapPin className="inline size-3.5 mr-1" /> Utforska destinationen</span>
-            <span className="affiliate-product-arrow"><ArrowUpRight className="size-5" /></span>
-          </div>
+          <p className="affiliate-product-description">Utforska eSIM och datapaket för {destination.toLowerCase()}.</p>
+          <div className="affiliate-product-footer"><span>Se alternativ hos Airalo</span><ArrowUpRight className="size-[18px]" /></div>
         </div>
       </article>
     );
