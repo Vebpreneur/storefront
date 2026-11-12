@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { SellerCard } from "@/components/sellers/SellerCard";
@@ -101,18 +102,15 @@ export default async function SellersPage({
     `${basePath}${directoryPath(target)}`;
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">{t("title")}</h1>
-        <p className="mt-2 text-gray-500">{t("subtitle")}</p>
+    <div className="provider-directory-page container mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16">
+      <div className="provider-directory-intro">
+        <div><p className="provider-directory-eyebrow">VÅR MARKNADSPLATS</p><h1>{t("title")}</h1><p>Utforska eSIM-leverantörer och deras destinationer. Hitta rätt uppkoppling inför resan.</p></div>
+        <span className="provider-directory-quantity">{count} leverantörer <ArrowUpRight className="size-4" /></span>
       </div>
 
       {sellers.length > 0 ? (
         <>
-          <p className="mb-4 text-sm text-gray-500">
-            {t("sellerCount", { count })}
-          </p>
-          <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="provider-directory-grid grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {sellers.map((seller) => (
               <li key={seller.id} className="flex">
                 <SellerCard
