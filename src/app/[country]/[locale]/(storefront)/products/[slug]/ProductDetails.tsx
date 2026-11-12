@@ -126,7 +126,7 @@ export function ProductDetails({
 
 
   if (affiliate && externalOffer) {
-    const destination = product.name.replace(/^Airalo\\s*[–-]\\s*/, "");
+    const destination = product.name.replace(/^Airalo\s*[–-]\s*/, "");
     const isGlobal = product.slug.endsWith("globalt");
     const isRegion = ["europa", "asien"].some(d => product.slug.endsWith(d));
     const category = isGlobal ? "Global eSIM" : isRegion ? "Regional eSIM" : "Lokalt eSIM";
