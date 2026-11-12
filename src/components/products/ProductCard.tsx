@@ -58,7 +58,7 @@ export const ProductCard = memo(function ProductCard({
 
 
   if (affiliate && product.slug.startsWith("airalo-")) {
-    const destination = product.name.replace(/^Airalo\\s*[–-]\\s*/, "");
+    const destination = product.name.replace(/^Airalo\s*[–-]\s*/, "");
     const category = product.slug.endsWith("globalt") ? "Globalt eSIM" : ["europa","asien"].some(v=>product.slug.endsWith(v)) ? "Regionalt eSIM" : "Lokalt eSIM";
     return (
       <article className="affiliate-product-card group">
