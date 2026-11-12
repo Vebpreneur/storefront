@@ -1,5 +1,5 @@
 import type { Seller } from "@spree/sdk";
-import { ChevronRight, ArrowUpRight, ArrowDown, Globe2, Wifi, ShieldCheck, MapPin, Smartphone, Sparkles } from "lucide-react";
+import { ChevronRight, ArrowUpRight, ArrowDown, Globe2, Wifi, ShieldCheck, MapPin, Smartphone, Sparkles, Search } from "lucide-react";
 import { affiliateEnabled, affiliateUrl } from "@/lib/affiliate/catalog";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -97,6 +97,17 @@ export async function SellerHeader({
           <div className="provider-collection-intro">
             <div><p className="provider-overline"><Sparkles className="size-4" /> UPPTÄCK DIN NÄSTA RESA</p><h2>Var vill du vara <em>uppkopplad?</em></h2><p>Välj ett resmål för att se vad Airalo erbjuder. Alla köp genomförs direkt hos leverantören.</p></div>
             <span className="provider-collection-count">01 — 06</span>
+          </div>
+          <form action={`${basePath}/sellers/${seller.slug}`} method="GET" className="provider-search-form" role="search">
+            <Search className="size-5 shrink-0 text-[#a18a9b]" />
+            <input type="search" name="q" aria-label="Sök destinationer" placeholder="Sök ett land eller en region..." className="provider-search-input" />
+            <button type="submit">Sök destination <ArrowUpRight className="size-4" /></button>
+          </form>
+          <div className="provider-quick-filters" aria-label="Utforska efter typ">
+            <Link href={`${basePath}/sellers/${seller.slug}`}>Alla destinationer</Link>
+            <Link href={`${basePath}/sellers/${seller.slug}?option=countries`}>Länder</Link>
+            <Link href={`${basePath}/sellers/${seller.slug}?option=regions`}>Regioner</Link>
+            <Link href={`${basePath}/sellers/${seller.slug}?option=global`}>Globalt</Link>
           </div>
         </div>}
         {policies.length > 0 && <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8">{policies.map(p=><details key={p.id} className="border-b border-slate-200 py-4"><summary className="cursor-pointer font-medium">{p.name}</summary><p className="mt-2 text-sm text-slate-500">{p.body}</p></details>)}</div>}
