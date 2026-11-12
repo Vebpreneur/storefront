@@ -1,7 +1,7 @@
 "use client";
 
 import type { Media, Product, Seller, Variant } from "@spree/sdk";
-import { CircleCheckBig, CircleX, Loader2, ShoppingBag, ArrowUpRight, ChevronRight, Globe2, Smartphone, CheckCircle2, MapPin, Wifi } from "lucide-react";
+import { CircleCheckBig, CircleX, Loader2, ShoppingBag, ArrowUpRight, ChevronRight, Globe2, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
@@ -126,52 +126,43 @@ export function ProductDetails({
 
 
   if (affiliate && externalOffer) {
-    const destination = product.name.replace(/^Airalo\s*[–-]\s*/, "");
-    const isGlobal = product.slug.endsWith("globalt");
-    const isRegion = ["europa", "asien"].some(d => product.slug.endsWith(d));
-    const category = isGlobal ? "Global eSIM" : isRegion ? "Regional eSIM" : "Lokalt eSIM";
+    const destination = product.name.replace(/^Airalo\\s*[–-]\\s*/, "");
+    const category = product.slug.endsWith("globalt") ? "Globalt eSIM" : ["europa","asien"].some(v=>product.slug.endsWith(v)) ? "Regionalt eSIM" : "Lokalt eSIM";
     return (
       <main className="affiliate-product-page">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <nav aria-label="Brödsmulor" className="affiliate-product-breadcrumb">
-            <Link href={`${basePath}/sellers`} className="hover:text-slate-900">Leverantörer</Link>
-            <ChevronRight className="size-3.5" />
-            <Link href={`${basePath}/sellers/airalo`} className="hover:text-slate-900">Airalo</Link>
-            <ChevronRight className="size-3.5" />
-            <span className="text-slate-900">{destination}</span>
+          <nav className="affiliate-product-breadcrumb" aria-label="Brödsmulor">
+            <Link href={`${basePath}/sellers`}>Leverantörer</Link><ChevronRight className="size-4" />
+            <Link href={`${basePath}/sellers/airalo`}>Airalo</Link><ChevronRight className="size-4" />
+            <span>{destination}</span>
           </nav>
           <div className="affiliate-product-main">
             <div className="affiliate-product-gallery">
               <MediaGallery images={galleryImages} productName={product.name} activeIndex={variantImageIndex} />
             </div>
-            <div className="affiliate-product-info">
-              <p className="affiliate-product-eyebrow"><Globe2 className="size-4" /> AIRALO / {category.toUpperCase()}</p>
-              <h1>Uppkopplad i <span className="text-[#ac7994]">{destination}.</span></h1>
-              <p className="affiliate-product-lead">
-                Utforska Airalos eSIM för {destination}. Välj datamängd och giltighetstid på Airalos webbplats — aktuella paket, priser och villkor visas där.
-              </p>
+            <section className="affiliate-product-info">
+              <p className="affiliate-product-eyebrow">AIRALO · {category.toUpperCase()}</p>
+              <h1>eSIM för {destination}</h1>
+              <p className="affiliate-product-lead">Hitta ett eSIM som passar din resa till {destination}. Jämför tillgängliga datapaket, giltighetstider och villkor direkt hos Airalo.</p>
+              <div className="affiliate-product-action">
+                <p className="affiliate-product-action-label">Välj datapaket hos leverantören</p>
+                <a href={externalOffer} target="_blank" rel="sponsored noopener noreferrer" className="affiliate-product-cta">
+                  Se eSIM-alternativ hos Airalo <ArrowUpRight className="size-5" />
+                </a>
+                <p className="affiliate-product-disclosure">Aktuella priser och tillgänglighet visas hos Airalo. Vi kan få provision via länken.</p>
+              </div>
               <Link href={`${basePath}/sellers/airalo`} className="affiliate-product-provider">
-                <div><Globe2 className="size-5 text-[#a87596]" /><span>Erbjuds av <strong>Airalo</strong></span></div>
-                <ChevronRight className="size-4 text-slate-400" />
+                <span><Globe2 className="size-5" /> Fler destinationer från <strong>Airalo</strong></span><ChevronRight className="size-[18px]" />
               </Link>
-              <a href={externalOffer} target="_blank" rel="sponsored noopener noreferrer" className="affiliate-product-cta">
-                Utforska eSIM hos Airalo <ArrowUpRight className="size-5" />
-              </a>
-              <p className="affiliate-product-disclosure">Du lämnar vår marknadsplats och öppnar Airalo. Vi kan få provision om du genomför ett köp. Priser och tillgänglighet bekräftas hos leverantören.</p>
-              <div className="affiliate-product-steps">
-                <div className="affiliate-product-step"><span className="affiliate-product-step-icon"><MapPin className="size-[18px]"/></span><div><strong>1. Välj destination</strong>Du har valt {destination}.</div></div>
-                <div className="affiliate-product-step"><span className="affiliate-product-step-icon"><Smartphone className="size-[18px]"/></span><div><strong>2. Välj eSIM</strong>Jämför aktuella paket hos Airalo.</div></div>
-                <div className="affiliate-product-step"><span className="affiliate-product-step-icon"><Wifi className="size-[18px]"/></span><div><strong>3. Kom igång</strong>Följ Airalos installationsguide.</div></div>
+              <div className="affiliate-product-guidance">
+                <h2>Inför ditt köp</h2>
+                <ul>
+                  <li><CheckCircle2 className="size-[18px]" /> Kontrollera att din mobil är kompatibel med eSIM.</li>
+                  <li><CheckCircle2 className="size-[18px]" /> Jämför datapott och giltighetstid hos leverantören.</li>
+                  <li><CheckCircle2 className="size-[18px]" /> Airalo hanterar betalning, installation och support.</li>
+                </ul>
               </div>
-              <div className="mt-9 border-t border-[#e6e3eb] pt-7">
-                <h2 className="text-lg font-extrabold tracking-tight">Bra att veta</h2>
-                <div className="mt-5 space-y-3 text-sm text-slate-600">
-                  <p className="flex gap-3"><CheckCircle2 className="size-5 shrink-0 text-[#a87596]" /> Kontrollera att din enhet stöder eSIM innan köp.</p>
-                  <p className="flex gap-3"><CheckCircle2 className="size-5 shrink-0 text-[#a87596]" /> Tillgängliga nätverk och datapaket varierar mellan destinationer.</p>
-                  <p className="flex gap-3"><CheckCircle2 className="size-5 shrink-0 text-[#a87596]" /> Airalo ansvarar för betalning, leverans och support för abonnemanget.</p>
-                </div>
-              </div>
-            </div>
+            </section>
           </div>
         </div>
       </main>
