@@ -29,6 +29,7 @@ export async function SellerHeader({
     return (
       <div className="provider-storefront" data-provider={seller.slug}>
         <div className="provider-hero">
+          <div className="provider-hero-grid" aria-hidden="true" />
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <nav aria-label="Brödsmulor" className="provider-breadcrumb">
               <Link href={`${basePath}/sellers`}>Leverantörer</Link>
@@ -40,9 +41,11 @@ export async function SellerHeader({
                 <div className="provider-brandlockup">
                   <span className="provider-brandlogo"><SellerImage src={logo} alt={seller.name} fill sizes="68px" className="object-contain p-2" /></span>
                   <span>{seller.name}</span>
-                  <span className="provider-verified">eSIM-leverantör</span>
+                  <span className="provider-verified">LEVERANTÖR</span>
                 </div>
-                <h1 className="provider-headline">{airalo ? "Upptäck världen med Airalo." : `Utforska eSIM från ${seller.name}.`}</h1>
+                <p className="provider-hero-kicker">INTERNATIONELL UPPKOPPLING</p>
+                <h1 className="provider-headline">{airalo ? "Airalo eSIM." : `${seller.name} eSIM.`}</h1>
+                <p className="provider-hero-subtitle">Uppkoppling för nästa destination.</p>
                 <p className="provider-intro">{airalo ? "Hitta eSIM för din nästa resa. Utforska destinationer och jämför aktuella datapaket direkt hos Airalo." : seller.about}</p>
                 <div className="provider-hero-actions">
                   <a href="#seller-products" className="provider-primary-cta">Se destinationer <ArrowDown className="size-4" /></a>
@@ -52,20 +55,20 @@ export async function SellerHeader({
               </div>
               <div className="provider-hero-image" aria-hidden="true">
                 <SellerImage src={seller.cover_photo_url} alt="" fill sizes="(max-width: 768px) 100vw, 45vw" className="object-cover" priority />
-                <span className="provider-image-label">{airalo ? "Din nästa destination börjar här" : "Upptäck nya destinationer"}</span>
+                <span className="provider-image-label">{airalo ? "Upptäck destinationer världen över" : "Utforska utbudet"}</span>
               </div>
             </div>
           </div>
         </div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="provider-features">
-            <span><Globe2 className="size-4" /> Lokala, regionala och globala alternativ</span>
-            <span><Smartphone className="size-4" /> eSIM utan fysiskt SIM-kort</span>
-            <span><ShieldCheck className="size-4" /> Köp direkt hos leverantören</span>
+            <div className="provider-feature"><Globe2 className="size-5" /><div><strong>Resmål världen över</strong><span>Lokala, regionala och globala alternativ</span></div></div>
+            <div className="provider-feature"><Smartphone className="size-5" /><div><strong>Enkelt med eSIM</strong><span>Digital uppkoppling utan fysiskt SIM-kort</span></div></div>
+            <div className="provider-feature"><ShieldCheck className="size-5" /><div><strong>Direkt från leverantören</strong><span>Se priser och villkor hos {seller.name}</span></div></div>
           </div>
           {airalo && <div className="provider-discover">
             <div className="provider-collection-intro">
-              <div><p className="provider-overline">DESTINATIONER</p><h2>Hitta ditt nästa resmål</h2><p>Utforska Airalos eSIM-alternativ. Aktuella priser och villkor visas hos Airalo.</p></div>
+              <div><p className="provider-overline">AIRALO / DESTINATIONER</p><h2>Välj din destination</h2><p>Utforska Airalos eSIM-alternativ. Aktuella priser och villkor visas hos Airalo.</p></div>
             </div>
             <form action={`${basePath}/sellers/${seller.slug}`} method="GET" role="search" className="provider-search-form">
               <Search className="size-5" />
