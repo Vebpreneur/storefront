@@ -145,7 +145,8 @@ export function ProductDetails({
               <h1>eSIM för {destination}</h1>
               <p className="affiliate-product-lead">Hitta ett eSIM som passar din resa till {destination}. Jämför tillgängliga datapaket, giltighetstider och villkor direkt hos Airalo.</p>
               <div className="affiliate-product-action">
-                <p className="affiliate-product-action-label">Välj datapaket hos leverantören</p>
+                <p className="affiliate-product-action-kicker">SE AKTUELLA ERBJUDANDEN</p>
+                <p className="affiliate-product-action-label">Välj datapaket hos Airalo</p>
                 <a href={externalOffer} target="_blank" rel="sponsored noopener noreferrer" className="affiliate-product-cta">
                   Se eSIM-alternativ hos Airalo <ArrowUpRight className="size-5" />
                 </a>
@@ -155,12 +156,12 @@ export function ProductDetails({
                 <span><Globe2 className="size-5" /> Fler destinationer från <strong>Airalo</strong></span><ChevronRight className="size-[18px]" />
               </Link>
               <div className="affiliate-product-guidance">
-                <h2>Inför ditt köp</h2>
-                <ul>
-                  <li><CheckCircle2 className="size-[18px]" /> Kontrollera att din mobil är kompatibel med eSIM.</li>
-                  <li><CheckCircle2 className="size-[18px]" /> Jämför datapott och giltighetstid hos leverantören.</li>
-                  <li><CheckCircle2 className="size-[18px]" /> Airalo hanterar betalning, installation och support.</li>
-                </ul>
+                <h2>Så fungerar det</h2>
+                <div className="affiliate-guidance-grid">
+                  <div><span className="affiliate-guidance-number">01</span><strong>Kontrollera din mobil</strong><p>Se till att enheten stöder eSIM.</p></div>
+                  <div><span className="affiliate-guidance-number">02</span><strong>Välj ett paket</strong><p>Jämför datapott och giltighetstid.</p></div>
+                  <div><span className="affiliate-guidance-number">03</span><strong>Aktivera ditt eSIM</strong><p>Följ leverantörens installationsguide.</p></div>
+                </div>
               </div>
             </section>
           </div>
