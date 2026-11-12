@@ -368,3 +368,25 @@ input[type="search"]::-webkit-search-cancel-button {
 @media(max-width:1000px){.provider-hero-layout{grid-template-columns:1fr;min-height:0;padding-top:52px}.provider-visual{position:absolute;right:-170px;top:80px;width:450px;opacity:.18;pointer-events:none}.provider-headline{max-width:800px}.provider-features{padding:10px}.provider-feature{padding:10px}.affiliate-product-main{gap:28px}}
 @media(max-width:767px){.provider-hero-inner{padding-bottom:80px}.provider-hero-layout{padding-top:26px}.provider-brandlockup{margin-top:29px;gap:12px}.provider-brandlogo{width:56px;height:56px;border-radius:16px}.provider-headline{font-size:clamp(43px,10.5vw,66px)}.provider-intro{margin-top:18px}.provider-visual{right:-260px;top:60px;opacity:.11}.provider-hero-actions{align-items:stretch}.provider-primary-cta,.provider-secondary-cta{flex:1 1 190px}.provider-features{grid-template-columns:1fr;margin-top:-30px;padding:9px 17px;border-radius:18px}.provider-feature{padding:15px 3px}.provider-feature:not(:last-child){border-right:0;border-bottom:1px solid #eeeaf1}.provider-collection-count{display:none}.affiliate-product-main{grid-template-columns:1fr}.affiliate-product-page{padding:25px 0 70px}.affiliate-product-gallery{border-radius:16px;padding:9px}.affiliate-product-steps{grid-template-columns:1fr}.affiliate-product-step{display:flex;align-items:center;gap:12px}.affiliate-product-step strong{margin:0}}
 @media(prefers-reduced-motion:reduce){.provider-globe,.provider-hero-glow{animation:none}.affiliate-product-card,.affiliate-product-arrow,.provider-primary-cta,.provider-secondary-cta,.affiliate-product-cta{transition:none}}
+
+
+/* Original SellerCard in curated marketplace mode */
+.provider-directory-card{--dc:#211429;--da:#e8a5ac;border-radius:24px;box-shadow:0 12px 30px #20203609;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.provider-directory-card[data-provider="yesim"]{--dc:#0e302f;--da:#90eabb}
+.provider-directory-card[data-provider="drimsim"]{--dc:#142947;--da:#96baf0}
+.provider-directory-card[data-provider="saily"]{--dc:#261a4c;--da:#c0a6fa}
+.provider-directory-card[data-provider="cosim"]{--dc:#0d2b3e;--da:#9edce6}
+.provider-directory-card[data-provider="roamic"]{--dc:#352714;--da:#f5c890}
+.provider-directory-card[data-provider="bytesim"]{--dc:#142843;--da:#b7d6ff}
+.provider-directory-card[data-provider="voye-global"]{--dc:#382032;--da:#edbbd6}
+.provider-directory-card[data-provider="quibity"]{--dc:#242042;--da:#c5b8fa}
+.provider-directory-card:hover{transform:translateY(-7px);box-shadow:0 30px 60px #20203621;border-color:#d9d2db}
+.provider-directory-cover{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:space-between;height:185px;overflow:hidden;padding:24px;background:radial-gradient(circle at 80% 30%,#ffffff27,transparent 47%),linear-gradient(130deg,var(--dc),#121724);color:white}
+.provider-directory-pattern{position:absolute;z-index:-1;inset:0;opacity:.3;background-image:linear-gradient(#ffffff20 1px,transparent 1px),linear-gradient(90deg,#ffffff20 1px,transparent 1px);background-size:35px 35px;mask-image:linear-gradient(90deg,transparent,black)}
+.provider-directory-circle{position:absolute;z-index:-1;top:-50px;right:-30px;width:230px;height:230px;border:1px solid #ffffff45;border-radius:50%;box-shadow:0 0 0 30px #ffffff08,0 0 0 65px #ffffff08}
+.provider-directory-cover-heading{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.13em;font-weight:800;color:#ffffffb3}
+.provider-directory-cover-name{margin-bottom:8px;font:800 30px/1 var(--font-display),sans-serif;letter-spacing:-.06em}
+.provider-directory-logo{position:relative;width:70px;height:70px;margin-top:-36px;overflow:hidden;border:5px solid white;border-radius:20px;background:white;box-shadow:0 14px 30px #13101d17;transform:rotate(-4deg)}
+.provider-directory-arrow{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:#241e2b;color:white;transition:transform .25s,background .25s}
+.provider-directory-card:hover .provider-directory-arrow{transform:translateX(3px);background:#a17298}
+@media(prefers-reduced-motion:reduce){.provider-directory-card,.provider-directory-arrow{transition:none}}
