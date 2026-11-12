@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Globe2, Smartphone, ExternalLink } from "lucide-react";
+import { Globe2, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
@@ -143,8 +143,8 @@ export default async function SellerPage({
               <div>
                 <p className="provider-overline"><Globe2 className="size-4" /> BRA ATT VETA</p>
                 <h2 id="airalo-faq-title" className="provider-faq-heading mt-4">Frågor om<br />Airalo eSIM.</h2>
-                <p className="mt-5 text-sm leading-7 text-[#797483] max-w-sm">Hitta rätt uppkoppling inför resan. När du valt destination kan du jämföra aktuella paket direkt på Airalos webbplats.</p>
-                <Link href={`${basePath}/products`} className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#9b6a89] hover:text-[#5d3858]">Utforska alla destinationer <ExternalLink className="size-4" /></Link>
+                <p className="mt-5 text-sm leading-7 text-[#66766a] max-w-sm">Hitta rätt uppkoppling inför resan. När du valt destination kan du jämföra aktuella paket direkt på Airalos webbplats.</p>
+                <Link href={`${basePath}/products`} className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#196c55] hover:text-[#104d3c]">Utforska alla destinationer <ExternalLink className="size-4" /></Link>
               </div>
               <div>
                 <details><summary>Vad är ett eSIM?</summary><p>Ett eSIM är ett digitalt SIM som kan aktiveras på en kompatibel mobil utan att du behöver sätta i ett fysiskt SIM-kort. Kontrollera att din enhet stöder eSIM innan du väljer ett paket.</p></details>
