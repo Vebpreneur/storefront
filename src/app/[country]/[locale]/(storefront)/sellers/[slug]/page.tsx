@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Globe2, Smartphone, ExternalLink } from "lucide-react";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { ProductListing } from "@/components/products/ProductListing";
@@ -134,6 +136,27 @@ export default async function SellerPage({
           emptyMessage={t("noProducts")}
         />
       </section>
+      {seller.slug === "airalo" && (
+        <section className="provider-faq mt-16" aria-labelledby="airalo-faq-title">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-9 lg:grid-cols-[.8fr_1.2fr] lg:gap-24">
+              <div>
+                <p className="provider-overline"><Globe2 className="size-4" /> BRA ATT VETA</p>
+                <h2 id="airalo-faq-title" className="provider-faq-heading mt-4">Frågor om<br />Airalo eSIM.</h2>
+                <p className="mt-5 text-sm leading-7 text-[#797483] max-w-sm">Hitta rätt uppkoppling inför resan. När du valt destination kan du jämföra aktuella paket direkt på Airalos webbplats.</p>
+                <Link href={`${basePath}/products`} className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-[#9b6a89] hover:text-[#5d3858]">Utforska alla destinationer <ExternalLink className="size-4" /></Link>
+              </div>
+              <div>
+                <details><summary>Vad är ett eSIM?</summary><p>Ett eSIM är ett digitalt SIM som kan aktiveras på en kompatibel mobil utan att du behöver sätta i ett fysiskt SIM-kort. Kontrollera att din enhet stöder eSIM innan du väljer ett paket.</p></details>
+                <details><summary>Hur väljer jag rätt Airalo-paket?</summary><p>Börja med resmålet. Jämför sedan datapott, giltighetstid, täckning och eventuella begränsningar på Airalos webbplats. Vi visar destinationer här, men de aktuella abonnemangsvillkoren hittar du hos leverantören.</p></details>
+                <details><summary>Kan jag använda Airalo i flera länder?</summary><p>Airalo erbjuder lokala, regionala och globala eSIM-alternativ. Vilka länder som ingår beror på paketet. Kontrollera täckningslistan för det specifika alternativ du väljer.</p></details>
+                <details><summary>Vem hanterar min beställning och support?</summary><p>Du genomför köp och installation hos Airalo. Airalo ansvarar för sina produkter, betalningsvillkor och support. Vår marknadsplats hjälper dig hitta destinationer och komma vidare till leverantören.</p></details>
+                <details><summary>Varför skickas jag vidare till Airalo?</summary><p>Vi är en fristående affiliatemarknadsplats, inte återförsäljare av Airalos eSIM. Länkar kan ge oss provision, utan att vi lägger på ett eget pris.</p></details>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
